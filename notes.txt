@@ -505,3 +505,194 @@
         int add(int []arr);
 
 ---------------------------------------- Pointers -- All
+
+    Pointer:-
+        A pointer is a vairable that stores memory address of a variable
+
+        int x = 10;
+        int *p = &x;            //*p Declaration of Pointer, and &x is for assigning memory  address of x
+
+        * -> Dereference Operator
+        & -> Address Operator
+
+        x = 10   -> 1004
+        *p = &x, *p = 10   
+        p = 1004   -> 1008
+
+        printf("%d",x);     -> 10
+        printf("%d",&x);    -> 1004
+        printf("%d",p);     -> 1004
+        printf("%d",*p);    -> 10
+        printf("%d",&p);    -> 1008
+
+        *p = 30
+        printf("%d",x);     -> 30
+
+    Array of Pointers:-
+        int arr[3] = {10,20,30};
+                        0  1  2
+        printf("%d",*arr);
+            arr[0] = *arr       -> 0 index
+            arr[1] = *(arr + 1) -> 1 index
+
+
+        for(int i = 0 ;i <5; i++){
+            printf("%d",*(arr+i));
+        }
+
+    Pointer to Function :
+
+        void func1(int *a){
+            *a = 20;
+        }
+
+        // void func1(int a){
+        //     a = 20;
+        // }
+
+        int main(){
+            int x = 12;
+            printf("%d",x);         -> 12
+
+            // func1(x);
+            // printf("%d",x);         -> 12
+
+            func1(&x);
+            printf("%d",x);         -> 20
+            return 0;
+        }
+
+    Null Pointer:
+        int *p;             -> Not industry method      -> Garbage value initially
+        int *p = NULL;      -> Industry method          -> Safer
+
+    Void Pointer:
+        void *p;            -> Void pointer, when a user doesn't know type of value
+        *(int*)p = &x;
+
+    Dangling Pointer:
+        When the original variable doesn't have any value left, but the pointer stills points to it
+
+        int x = 10;
+        int *p = &x;                
+        x = NULL;           -> x is empty
+        printf("%d",*p);    -> Returns 10
+
+
+    Double Pointer:
+        int x = 10;             -> 1000
+        int *p = &x;            -> 2000
+        int **q = &p;           -> 3000
+
+        x = 10, &x = 1000
+        p = 1000, &p = 2000, *p = 10
+        q = 2000, &q = 3000, *q = 1000, **q = 10
+
+    Triple Pointer - Double Pointer Functions - Pointer Structure - Memory Allocation
+
+        int x = 10;             -> 1000
+        int *p = &x;            -> 2000
+        int **q = &p;           -> 3000
+        int ***r = &q;          -> 4000
+
+        x = 10, &x = 1000
+        p = 1000, &p = 2000, *p = 10
+        q = 2000, &q = 3000, *q = 1000, **q = 10
+        r = 3000, &r = 4000, *r = 2000, **r = 1000, ***r = 10
+
+    Double pointer Functions:
+        void change(int **p, int *r){
+        // void change(int *p, int *r){
+            *p = r;
+        }
+
+        int main(){
+            int x = 10;
+            int y = 20;
+            int *q = &x;
+            change(&q,&y);          -> Changes the referencing of pointer to Y instead of X. // x = 20
+        }
+
+
+    Pointer Structure:
+        struct node{                // Valid
+            int data;
+            struct node *next;
+        }
+
+        struct node{                // Error
+            int data;
+            struct node next;
+        }
+
+        struct node s;
+        s->next = "Address of next"
+        s->data = "Value"
+
+        void func(struct node *s){
+
+        }
+
+        int main(){
+            struct node s;
+            func(&s);
+        }
+
+    Dynamic Memory Allocation:
+    #include<stdlib.h>      // standard library
+
+        Malloc:
+            Memory Allocation: Continous Block of memory, But it won't be initialized
+            
+            p = (type casting)malloc(size of)
+            int p = malloc(4);
+            
+            float c = (float)malloc(sizeof(p))
+
+        Calloc:     
+            Contigous Allocation: Continous Block of memory, But it will be initialized to 0
+
+            p = (type casting)calloc(number of element,size of)
+            int a[];
+            a = (int)calloc(10,4)
+
+        Realloc:
+            Resize memory: Mainly used to resize a object
+
+            p = (type castiing)realloc(p,new size of)
+            a = (int)realloc(a,20)
+
+        Free:
+            Clears the object and makes it null
+            free(p)
+
+            free(a)
+
+---------------------------------------- const - static
+
+    Const:
+        fix value, can't be changed
+
+        const int x = 10;
+        x = 20;                 //error
+
+    Static:
+        Creates itself only once.
+
+        void fun(){
+            static int x = 0;
+            x++;
+            printf("%d",x);
+        }
+
+        int main(){
+            for(int i = 0; i< 5; i ++){
+                func();
+            }
+            return 0;
+        }
+
+        Without Static: 1 1 1 1 1 
+        Static  :       1 2 3 4 5 
+
+    
